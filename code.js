@@ -27,6 +27,9 @@ class dog extends animal {
 
     diggingProgress = 0;
 
+    isPolinated = false;
+    polinationTimeout = null;
+
     speedX = 0;
     speedY = 0;
 
@@ -224,6 +227,9 @@ class dog extends animal {
         this.y2 += this.speedY;
 
         for (let block of terrainblocks) {
+            if (block instanceof ActiveVegetation) {
+                block.activate(this);
+            }
             if (this.check_collision(block)) {
                 if (block instanceof ActiveTerrain) block.activate();
                 if (this.speedY > 0) {
@@ -279,6 +285,10 @@ class dog extends animal {
 
     draw() {
         if (this.underground) return;
+        if (this.isPolinated) {
+            if (frame < 30) ctx.drawImage(pollenEffectTexture, 0, 0, 1260, 600, this.x1, this.y1-10, this.width, this.height);
+            else ctx.drawImage(pollenEffectTexture, 1260, 0, 1260, 600, this.x1, this.y1-10, this.width, this.height);
+        }
         if (this.midAir) {
             if (this.facingLeft) {
                 if (frame < 15) {
@@ -413,6 +423,55 @@ class Fish extends animal {
     }
 }
 
+class Bee extends animal {
+    constructor(posX, posY) {
+        super(BEE_WIDTH, BEE_HEIGHT, posX, posY);
+    }
+
+    facingLeft = false;
+    texture = beeTexture;
+
+    draw() {
+        if (this.facingLeft) {
+            if (frame < 30) ctx.drawImage(this.texture, 0, 0, 1200, 1050, this.x1, this.y1, this.width, this.height);
+            else ctx.drawImage(this.texture, 1275, 0, 1200, 1050, this.x1, this.y1, this.width, this.height);
+        } else {
+            if (frame < 30) ctx.drawImage(this.texture, 2550, 0, 1200, 1050, this.x1, this.y1, this.width, this.height);
+            else ctx.drawImage(this.texture, 3825, 0, 1200, 1050, this.x1, this.y1, this.width, this.height);
+        }
+    }
+
+    update(player) {
+        if (player.isPolinated && !player.underground) {
+            if (player.x1 > this.x1) {
+                this.facingLeft = false;
+                this.x1 += Math.min(BEE_SPEED_X, player.x1 - this.x1);
+                this.x2 = this.x1 + this.width;
+            } else {
+                this.facingLeft = true;
+                this.x1 -= Math.min(BEE_SPEED_X, this.x1 - player.x1);
+                this.x2 = this.x1 + this.width;
+            }
+
+            if (player.y1 > this.y1) {
+                this.y1 += Math.min(BEE_SPEED_Y, player.y1 - this.y1);
+                this.y2 = this.y1 + this.height;
+            } else {
+                this.y1 -= Math.min(BEE_SPEED_Y, this.y1 - player.y1);
+                this.y2 = this.y1 + this.height;
+            }
+
+            this.attack(player);
+        }
+    }
+
+    attack(player) {
+        let isPosX = Math.min(this.x2, player.x2) > Math.max(this.x1, player.x1);
+        let isPosY = Math.min(this.y2, player.y2) > Math.max(this.y1, player.y1);
+        if (isPosX && isPosY) player.kill();
+    }
+}
+
 class Vegetation {
     constructor(posX, posY, width, height) {
         this.posX = posX;
@@ -430,7 +489,43 @@ class Vegetation {
     }
 }
 
-class Flower1 extends Vegetation {
+class ActiveVegetation extends Vegetation {
+    constructor(posX, posY, width, height) {
+        super(posX, posY, width, height);
+    }
+
+    activate() {}
+
+    static vegetationList = [];
+}
+
+class Flower extends ActiveVegetation {
+    constructor(posX, posY, width, height) {
+        super(posX, posY, width, height);
+        this.x1 = posX;
+        this.y1 = posY;
+        this.x2 = posX + width;
+        this.y2 = posY + height;
+    }
+
+    activate(player) {
+        let isPosX = Math.min(this.x2, player.x2) > Math.max(this.x1, player.x1);
+        let isPosY = Math.min(this.y2, player.y2) > Math.max(this.y1, player.y1);
+        if (isPosX && isPosY) {
+            if (player.isPolinated) {
+                clearTimeout(player.polinationTimeout);
+            }
+
+            player.isPolinated = true;
+            player.polinationTimeout = setTimeout(() => {
+                player.isPolinated = false;
+                player.polinationTimeout = null;
+            }, 10000);
+        }
+    }
+}
+
+class Flower1 extends Flower {
     constructor(posX, posY) {
         super(posX, posY, BLOCKSIZE, BLOCKSIZE);
     }
@@ -438,7 +533,7 @@ class Flower1 extends Vegetation {
     texture = flower1Texture;
 }
 
-class Flower2 extends Vegetation {
+class Flower2 extends Flower {
     constructor(posX, posY) {
         super(posX, posY, BLOCKSIZE, BLOCKSIZE);
     }
@@ -446,12 +541,28 @@ class Flower2 extends Vegetation {
     texture = flower2Texture;
 }
 
-class Flower3 extends Vegetation {
+class Flower3 extends Flower {
     constructor(posX, posY) {
         super(posX, posY, BLOCKSIZE, BLOCKSIZE);
     }
 
     texture = flower3Texture;
+}
+
+class Flower4 extends Flower {
+    constructor(posX, posY) {
+        super(posX, posY, BLOCKSIZE, BLOCKSIZE);
+    }
+
+    texture = flower4Texture;
+}
+
+class Flower5 extends Flower {
+    constructor(posX, posY) {
+        super(posX, posY, BLOCKSIZE, BLOCKSIZE);
+    }
+
+    texture = flower5Texture;
 }
 
 class terrain {
@@ -721,6 +832,12 @@ function loadMap(mapPlot) {
                     case 'flower3':
                         block = new Flower3(j * BLOCKSIZE, i*BLOCKSIZE);
                         break;
+                    case 'flower4':
+                        block = new Flower4(j * BLOCKSIZE, i*BLOCKSIZE);
+                        break;
+                    case 'flower5':
+                        block = new Flower5(j * BLOCKSIZE, i*BLOCKSIZE);
+                        break;
                     case '':
                         block = null;
                 }
@@ -853,6 +970,10 @@ const FISHTRIGGERRANGEHEIGHT = 200;
 const FISHHEIGHT = 48;
 const FISHWIDTH = 39;
 const FISHRADIUS = 24;
+const BEE_WIDTH = 32;
+const BEE_HEIGHT = 28;
+const BEE_SPEED_X = 5;
+const BEE_SPEED_Y = 2;
 
 let frame = 0;
 let originX = 0;
@@ -867,6 +988,8 @@ let keys = {
     'dig': false
 }
 
+let pollenEffectTexture = new Image;
+pollenEffectTexture.src = 'Textures/PollenEffect2.png';
 
 let dirtTexture = new Image;
 dirtTexture.src = 'Textures/Dirt.png';
@@ -892,6 +1015,8 @@ ribbonTexture.src = 'Textures/Ribbon.png';
 
 let piranhaTexture = new Image;
 piranhaTexture.src = 'Textures/Piranha.png';
+let beeTexture = new Image;
+beeTexture.src = 'Textures/Bee2.png';
 
 let flower1Texture = new Image;
 flower1Texture.src = 'Textures/Flower1.png';
@@ -899,12 +1024,16 @@ let flower2Texture = new Image;
 flower2Texture.src = 'Textures/Flower2.png';
 let flower3Texture = new Image;
 flower3Texture.src = 'Textures/Flower3.png';
+let flower4Texture = new Image;
+flower4Texture.src = 'Textures/Flower4.png';
+let flower5Texture = new Image;
+flower5Texture.src = 'Textures/Flower5.png';
 
 let mapPlot = [
     [],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'grass', 'sand', 'sand', 'grass'],
     ['', '', 'cloud', 'cloud', 'cloud', '', '', '', '', '', 'grass', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
-    ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'flower1', '', 'flower2', 'flower3', '', '', '', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
+    ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'flower1', '', 'flower2', 'flower3', 'flower4', 'flower5', '', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'grass', 'grass', 'stonePath', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'sand', 'sand', 'waterFall', 'waterFall', 'sand', 'sand', 'grass', 'grass', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '','', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'dirt'],
     ['','','grass', 'grass', 'grass', 'flowers', 'grass', 'grass', 'grass', 'flowers', 'waterFall', 'waterFall', 'grass'],
@@ -920,6 +1049,8 @@ let Dog = new dog(105, 80, 547.5, 360);
 let terrainblocks = [];
 let ribbon = new Ribbon(1282.5, 245);
 let piranha = new Fish(1968, 313.5);
+let bee = new Bee(1350, 170);
+
 // for (let i = 0; i < 5; i++) {
 //     let grassPath1 = new grassPath(100+BLOCKSIZE*i, 500);
 //     terrainblocks.push(grassPath1);
@@ -941,6 +1072,8 @@ setInterval(function() {
     terrainblocks = loadTerrain(map, Dog);
     piranha.update(Dog);
     piranha.draw();
+    bee.draw();
+    bee.update(Dog);
     for (let block of terrainblocks) {
         block.draw();
     }
