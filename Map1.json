@@ -1,0 +1,13 @@
+[
+  [],
+  ["", "", "", "cloud"],
+  ["", "", "cloud", "cloud", "cloud", "", "", "", "", "", "grass"],
+  [],
+  ["", "", "", "", "", "", "", "", "", "", "", "", "", "","", "grass", "grass", "stonePath", "grass", "grass", "grass", "grass", "grass", "grass", "sand", "sand", "waterFall", "waterFall", "sand", "sand"],
+  ["", "", "", "", "", "", "", "", "", "", "", "", "", "","", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "sandDeep", "sandDeep", "sandDeep", "sandDeep", "sandDeep", "sandDeep"],
+  ["","","grass", "grass", "grass", "flowers", "grass", "grass", "grass", "flowers", "waterFall", "waterFall", "grass"],
+  ["","","dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt"],
+  ["","","dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt"],
+  ["","","dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt"],
+  ["","","dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt", "dirt"]
+]

@@ -1,0 +1,8 @@
+canvas {
+    position: absolute;
+    top: 10%;
+    left: 10%;
+    height: 80%;
+    aspect-ratio: 3/2;
+    background-color: lightblue;
+}
