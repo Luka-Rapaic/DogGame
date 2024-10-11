@@ -489,6 +489,14 @@ class Vegetation {
     }
 }
 
+class Tree extends Vegetation {
+    constructor(posX, posY) {
+        super(posX-TREE_WIDTH/2, posY-TREE_HEIGHT+BLOCKSIZE, TREE_WIDTH, TREE_HEIGHT);
+    }
+
+    texture = treeTexture;
+}
+
 class ActiveVegetation extends Vegetation {
     constructor(posX, posY, width, height) {
         super(posX, posY, width, height);
@@ -831,6 +839,9 @@ function loadMap(mapPlot) {
                     case 'cloud':
                         block = new Cloud(j * BLOCKSIZE, i * BLOCKSIZE);
                         break;
+                    case 'tree':
+                        block = new Tree(j * BLOCKSIZE, i * BLOCKSIZE);
+                        break;
                     case 'flower1':
                         block = new Flower1(j * BLOCKSIZE, i*BLOCKSIZE);
                         break;
@@ -972,6 +983,9 @@ const BLOCKOFFSET = BLOCKSIZE / 15;
 const LOADAMOUNTX = Math.ceil(CTXWIDTH / BLOCKSIZE * 0.5) + 3;
 const LOADAMOUNTY = Math.ceil(CTXHEIGHT / BLOCKSIZE * 0.5) + 3;
 
+const TREE_WIDTH = 245;
+const TREE_HEIGHT = 266;
+
 const RIBBONHEIGHT = 52;
 const RIBBONWIDTH = 60;
 const RIBBONRADIUS = 50;
@@ -1029,6 +1043,8 @@ piranhaTexture.src = 'Textures/Piranha.png';
 let beeTexture = new Image;
 beeTexture.src = 'Textures/Bee2.png';
 
+let treeTexture = new Image;
+treeTexture.src = 'Textures/Tree.png';
 let flower1Texture = new Image;
 flower1Texture.src = 'Textures/Flower1.png';
 let flower2Texture = new Image;
@@ -1048,7 +1064,7 @@ let mapPlot = [
     ['', '', 'cloud', 'cloud', 'cloud', '', '', '', '', '', 'grass', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'flower1', '', 'flower2', 'flower3', 'flower4', 'flower5', 'flower6', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'grass', 'grass', 'stonePath', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'sand', 'sand', 'waterFall', 'waterFall', 'sand', 'sand', 'grass', 'grass', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
-    ['', '', '', '', '', '', '', '', '', '', '', '', '', '','', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'dirt'],
+    ['', '', '', '', '', 'tree', '', '', '', '', '', '', '', '','', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'dirt'],
     ['','','grass', 'grass', 'grass', 'flowers', 'grass', 'grass', 'grass', 'flowers', 'waterFall', 'waterFall', 'grass'],
     ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt'],
     ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt'],
