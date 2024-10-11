@@ -565,6 +565,14 @@ class Flower5 extends Flower {
     texture = flower5Texture;
 }
 
+class Flower6 extends Flower {
+    constructor(posX, posY) {
+        super(posX, posY, BLOCKSIZE, BLOCKSIZE);
+    }
+
+    texture = flower6Texture;
+}
+
 class terrain {
     constructor(posX, posY) {
         this.posX = posX;
@@ -838,6 +846,9 @@ function loadMap(mapPlot) {
                     case 'flower5':
                         block = new Flower5(j * BLOCKSIZE, i*BLOCKSIZE);
                         break;
+                    case 'flower6':
+                        block = new Flower6(j * BLOCKSIZE, i*BLOCKSIZE);
+                        break;
                     case '':
                         block = null;
                 }
@@ -1028,12 +1039,14 @@ let flower4Texture = new Image;
 flower4Texture.src = 'Textures/Flower4.png';
 let flower5Texture = new Image;
 flower5Texture.src = 'Textures/Flower5.png';
+let flower6Texture = new Image;
+flower6Texture.src = 'Textures/Flower6.png';
 
 let mapPlot = [
     [],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'grass', 'sand', 'sand', 'grass'],
     ['', '', 'cloud', 'cloud', 'cloud', '', '', '', '', '', 'grass', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
-    ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'flower1', '', 'flower2', 'flower3', 'flower4', 'flower5', '', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
+    ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'flower1', '', 'flower2', 'flower3', 'flower4', 'flower5', 'flower6', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'grass', 'grass', 'stonePath', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'sand', 'sand', 'waterFall', 'waterFall', 'sand', 'sand', 'grass', 'grass', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '','', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'dirt'],
     ['','','grass', 'grass', 'grass', 'flowers', 'grass', 'grass', 'grass', 'flowers', 'waterFall', 'waterFall', 'grass'],
