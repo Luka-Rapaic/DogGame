@@ -983,8 +983,8 @@ const BLOCKOFFSET = BLOCKSIZE / 15;
 const LOADAMOUNTX = Math.ceil(CTXWIDTH / BLOCKSIZE * 0.5) + 3;
 const LOADAMOUNTY = Math.ceil(CTXHEIGHT / BLOCKSIZE * 0.5) + 3;
 
-const TREE_WIDTH = 245;
-const TREE_HEIGHT = 266;
+const TREE_WIDTH = 210;
+const TREE_HEIGHT = 250;
 
 const RIBBONHEIGHT = 52;
 const RIBBONWIDTH = 60;
@@ -1062,9 +1062,9 @@ let mapPlot = [
     [],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'grass', 'sand', 'sand', 'grass'],
     ['', '', 'cloud', 'cloud', 'cloud', '', '', '', '', '', 'grass', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
-    ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'flower1', '', 'flower2', 'flower3', 'flower4', 'flower5', 'flower6', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
+    ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'flower1', '', 'flower2', 'flower3', 'flower4', 'flower5', 'flower6', 'tree', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'grass', 'grass', 'stonePath', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'sand', 'sand', 'waterFall', 'waterFall', 'sand', 'sand', 'grass', 'grass', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
-    ['', '', '', '', '', 'tree', '', '', '', '', '', '', '', '','', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'dirt'],
+    ['', '', '', '', '', '', '', '', '', '', '', '', '', '','', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'dirt'],
     ['','','grass', 'grass', 'grass', 'flowers', 'grass', 'grass', 'grass', 'flowers', 'waterFall', 'waterFall', 'grass'],
     ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt'],
     ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt'],
