@@ -678,6 +678,7 @@ class sandDeep extends terrain {
 class water extends terrain {
     constructor(posX, posY) {
         super(posX, posY);
+        this.y1 += 10;
     }
 
     texture = waterTexture;
