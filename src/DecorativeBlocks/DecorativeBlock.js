@@ -1,10 +1,4 @@
-import {Rectangle} from "./Hitboxes/Rectangle";
-
-export class TerrainBlock {
-    constructor(x1, x2, y1, y2) {
-        this.hitbox = new Rectangle(x1, x2, y1, y2)
-    }
-
+export class DecorativeBlock {
     isDiggable() {
         return false;
     }
@@ -22,6 +16,6 @@ export class TerrainBlock {
     }
 
     collides(hitbox) {
-        return hitbox.overlapsRect(this.hitbox);
+        return false;
     }
 }

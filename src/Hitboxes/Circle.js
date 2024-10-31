@@ -1,4 +1,4 @@
-import {Hitbox} from "./Hitbox";
+import {Hitbox} from "../Hitbox";
 
 export class Circle extends Hitbox {
     constructor(x, y, r) {

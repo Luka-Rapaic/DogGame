@@ -1,4 +1,4 @@
-import {Hitbox} from './Hitbox'
+import {Hitbox} from '../Hitbox'
 
 export class Rectangle extends Hitbox {
     constructor(x1, x2, y1, y2) {
