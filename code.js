@@ -1,3 +1,6 @@
+import {GameMap} from "./src/GameMap.js";
+import {CameraFixed} from "./src/CameraFixed.js";
+
 class animal {
     constructor(width, height, posX, posY) {
         this.width = width;
@@ -973,8 +976,8 @@ document.addEventListener('keyup', (event) => {
     }
 })
 
-let canvas = document.getElementById('canvas');
-let ctx = canvas.getContext('2d', {alpha: false});
+export let canvas = document.getElementById('canvas');
+export let ctx = canvas.getContext('2d', {alpha: false});
 const CTXWIDTH = 1200
 const CTXHEIGHT = 800;
 console.log(CTXWIDTH, CTXHEIGHT);
@@ -1002,8 +1005,8 @@ const BEE_SPEED_X = 5;
 const BEE_SPEED_Y = 2;
 
 let frame = 0;
-let originX = 0;
-let originY = 0;
+export let originX = 0;
+export let originY = 0;
 let strictCamera = true;
 
 let keys = {
@@ -1060,26 +1063,44 @@ let flower6Texture = new Image;
 flower6Texture.src = 'Textures/Flower6.png';
 
 let mapPlot = [
-    [],
+    ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'grass', 'sand', 'sand', 'grass'],
     ['', '', 'cloud', 'cloud', 'cloud', '', '', '', '', '', 'grass', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'flower1', '', 'flower2', 'flower3', 'flower4', 'flower5', 'flower6', 'tree', '', '', '', '', '', '', '', '', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '', '', 'grass', 'grass', 'stonePath', 'grass', 'grass', 'grass', 'grass', 'grass', 'grass', 'sand', 'sand', 'waterFall', 'waterFall', 'sand', 'sand', 'grass', 'grass', 'dirt', 'sandDeep', 'sandDeep', 'dirt'],
     ['', '', '', '', '', '', '', '', '', '', '', '', '', '','', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'sandDeep', 'dirt'],
-    ['','','grass', 'grass', 'grass', 'flowers', 'grass', 'grass', 'grass', 'flowers', 'waterFall', 'waterFall', 'grass'],
-    ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt'],
-    ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt'],
-    ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt'],
-    ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt']];
+    ['','','grass', 'grass', 'grass', 'flowers', 'grass', 'grass', 'grass', 'flowers', 'waterFall', 'waterFall', 'grass', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+    ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+    ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+    ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''],
+    ['','','dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', 'dirt', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '']];
 
-let map = loadMap(mapPlot);
-
+// let map = loadMap(mapPlot);
 
 let Dog = new dog(105, 80, 547.5, 360);
 let terrainblocks = [];
 let ribbon = new Ribbon(1282.5, 245);
 let piranha = new Fish(1968, 313.5);
 let bee = new Bee(1350, 170);
+
+let newmap = [
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['', '', '', '', '', '', ''],
+    ['grass', 'grass', 'grass', 'grass', 'grass']
+];
+
+//THIS IS NEW
+GameMap.setMap(GameMap.readSchema(newmap));
+let camera = new CameraFixed(Dog);
+for (let row of GameMap.getScene(0, 0)) {
+    for (let block of row) {
+        console.log(block);
+    }
+}
+//THIS IS NEW
+
 
 // for (let i = 0; i < 5; i++) {
 //     let grassPath1 = new grassPath(100+BLOCKSIZE*i, 500);
@@ -1099,26 +1120,29 @@ setInterval(function() {
     frame = (frame + 1) % 60;
     ctx.fillRect(originX, originY, 1200, 800);
     ctx.fillStyle = 'rgba(200, 200, 255, 0.6)';
-    terrainblocks = loadTerrain(map, Dog);
-    piranha.update(Dog);
-    piranha.draw();
-    bee.draw();
-    bee.update(Dog);
-    for (let block of terrainblocks) {
-        block.draw();
+    // terrainblocks = loadTerrain(map, Dog);
+    // piranha.update(Dog);
+    // piranha.draw();
+    // bee.draw();
+    // bee.update(Dog);
+    for (let row of GameMap.getScene(5, 5)) {
+        for (let block of row) {
+            if (block) block.draw();
+        }
     }
-    for (let activeBlock of ActiveTerrain.blockList) {
-        activeBlock.update();
-    }
-    for (let collectible of Collectible.instanceList) {
-        collectible.draw();
-        collectible.collect(Dog);
-    }
-    Dog.update();
-    if (strictCamera) {
-        trackObjectStrict(Dog);
-    } else {
-        trackObject(Dog);
-    }
-    Dog.draw();
+    // for (let activeBlock of ActiveTerrain.blockList) {
+    //     activeBlock.update();
+    // }
+    // for (let collectible of Collectible.instanceList) {
+    //     collectible.draw();
+    //     collectible.collect(Dog);
+    // }
+    // Dog.update();
+    // camera.update();
+    // if (strictCamera) {
+    //     trackObjectStrict(Dog);
+    // } else {
+    //     trackObject(Dog);
+    // }
+    // Dog.draw();
 }, 16.66);

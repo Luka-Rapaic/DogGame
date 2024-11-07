@@ -1,5 +1,6 @@
-import {SurfaceBlock} from "../../SurfaceBlock";
-import {BLOCK_SIZE} from "../../Block";
+import {SurfaceBlock} from "../../SurfaceBlock.js";
+import {BLOCK_SIZE} from "../../Block.js";
+import {GameState} from "../../GameState";
 
 export class CloudBlock extends SurfaceBlock {
     constructor(x, y) {
@@ -40,6 +41,6 @@ export class CloudBlock extends SurfaceBlock {
     }
 
     draw() {
-        ctx.drawImage(this.texture, this.window, 0, BLOCK_SIZE, BLOCK_SIZE, this.x, this.y, BLOCK_SIZE, BLOCK_SIZE);
+        GameState.ctx.drawImage(CloudBlock.texture, this.window, 0, BLOCK_SIZE, BLOCK_SIZE, this.x, this.y, BLOCK_SIZE, BLOCK_SIZE);
     }
 }

@@ -1,12 +1,12 @@
-import {GrassBlock} from "./TerrainBlocks/SurfaceBlocks/GrassBlock";
-import {BLOCK_SIZE} from "./Block";
-import {GrassFlowersBlock} from "./TerrainBlocks/SurfaceBlocks/GrassFlowersBlock";
-import {DirtPathBlock} from "./TerrainBlocks/SurfaceBlocks/DirtPathBlock";
-import {StonePathBlock} from "./TerrainBlocks/SurfaceBlocks/StonePathBlock";
-import {DirtBlock} from "./TerrainBlocks/FullBlocks/DirtBlock";
-import {SandBlock} from "./TerrainBlocks/SurfaceBlocks/SandBlock";
-import {SandDeepBlock} from "./TerrainBlocks/FullBlocks/SandDeepBlock";
-import {CloudBlock} from "./TerrainBlocks/SurfaceBlocks/CloudBlock";
+import {GrassBlock} from "./TerrainBlocks/SurfaceBlocks/GrassBlock.js";
+import {BLOCK_SIZE} from "./Block.js";
+import {GrassFlowersBlock} from "./TerrainBlocks/SurfaceBlocks/GrassFlowersBlock.js";
+import {DirtPathBlock} from "./TerrainBlocks/SurfaceBlocks/DirtPathBlock.js";
+import {StonePathBlock} from "./TerrainBlocks/SurfaceBlocks/StonePathBlock.js";
+import {DirtBlock} from "./TerrainBlocks/FullBlocks/DirtBlock.js";
+import {SandBlock} from "./TerrainBlocks/SurfaceBlocks/SandBlock.js";
+import {SandDeepBlock} from "./TerrainBlocks/FullBlocks/SandDeepBlock.js";
+import {CloudBlock} from "./TerrainBlocks/SurfaceBlocks/CloudBlock.js";
 
 const SCENE_WIDTH = 18;
 const SCENE_HEIGHT = 12;
@@ -40,6 +40,7 @@ export class GameMap {
             let sceneRow = [];
 
             for (let currCol = col - SCENE_WIDTH / 2; currCol < finalCol; currCol++) {
+                if (currRow in this.map && currCol in this.map[currRow])
                 sceneRow.push(this.map[currRow][currCol]);
             }
 
@@ -55,7 +56,7 @@ export class GameMap {
         for (let row = 0; row < schema.length; row++) {
             let mapRow = [];
 
-            for (let col = 0; col < mapPlot[row].length; col++) {
+            for (let col = 0; col < schema[row].length; col++) {
                 let x = col * BLOCK_SIZE;
                 let y = row * BLOCK_SIZE;
                 let block;

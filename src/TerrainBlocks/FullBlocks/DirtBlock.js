@@ -1,4 +1,6 @@
-import {FullBlock} from "../../FullBlock";
+import {FullBlock} from "../../FullBlock.js";
+import {BLOCK_SIZE} from "../../Block";
+import {GameState} from "../../GameState";
 
 export class DirtBlock extends FullBlock {
     constructor(x, y) {
@@ -7,6 +9,10 @@ export class DirtBlock extends FullBlock {
 
     static {
         this.texture = new Image();
-        this.texture.src = "../RevisedTextures/Dirt.png";
+        this.texture.src = "../Textures/Dirt.png";
+    }
+
+    draw() {
+        GameState.ctx.drawImage(DirtBlock.texture, this.x, this.y, BLOCK_SIZE, BLOCK_SIZE);
     }
 }

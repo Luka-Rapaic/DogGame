@@ -1,5 +1,6 @@
-import {FullBlock} from "../../FullBlock";
-import {BLOCK_SIZE} from "../../Block";
+import {FullBlock} from "../../FullBlock.js";
+import {BLOCK_SIZE} from "../../Block.js";
+import {GameState} from "../../GameState";
 
 export class SandDeepBlock extends FullBlock {
     constructor(x, y) {
@@ -23,8 +24,8 @@ export class SandDeepBlock extends FullBlock {
     }
 
     draw() {
-        if (!this.isDug) ctx.drawImage(this.texture, 0, 0, BLOCK_SIZE, BLOCK_SIZE, this.x, this.y, BLOCK_SIZE, BLOCK_SIZE);
-        else ctx.drawImage(this.texture, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE, this.x, this.y, BLOCK_SIZE, BLOCK_SIZE);
+        if (!this.isDug) GameState.ctx.drawImage(SandDeepBlock.texture, 0, 0, BLOCK_SIZE, BLOCK_SIZE, this.x, this.y, BLOCK_SIZE, BLOCK_SIZE);
+        else GameState.ctx.drawImage(SandDeepBlock.texture, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE, BLOCK_SIZE, this.x, this.y, BLOCK_SIZE, BLOCK_SIZE);
         if (this.occupant != null) this.occupant.draw();
     }
 }

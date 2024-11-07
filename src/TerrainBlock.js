@@ -1,4 +1,4 @@
-import {Rectangle} from "./Hitboxes/Rectangle";
+import {Rectangle} from "./Hitboxes/Rectangle.js";
 
 export class TerrainBlock {
     constructor(x1, x2, y1, y2) {

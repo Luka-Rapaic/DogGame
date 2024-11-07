@@ -1,4 +1,4 @@
-import {frameID} from "../GameData";
+import {GameState} from "../GameState";
 import {GameMap} from "../GameMap";
 
 export class DigDown {
@@ -10,8 +10,8 @@ export class DigDown {
     counter = 0;
 
     execute() {
-        if (this.previousFrame + 1 !== frameID) this.counter = 0;
-        this.previousFrame = frameID;
+        if (this.previousFrame + 1 !== GameState.frameID) this.counter = 0;
+        this.previousFrame = GameState.frameID;
 
         let row = GameMap.getRow(this.puppet.y);
         let col = GameMap.getCol(this.puppet.x);
