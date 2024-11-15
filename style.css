@@ -1,8 +1,20 @@
 canvas {
-    position: absolute;
-    top: 10%;
-    left: 10%;
+    position: relative;
+    /*top: 10%;*/
+    /*left: 10%;*/
     height: 80%;
     aspect-ratio: 3/2;
     background-color: lightblue;
+    display: inline-block;
+}
+
+.flex-container {
+    position: fixed;
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.flex-container:first-child {
+
 }
